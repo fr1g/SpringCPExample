@@ -13,6 +13,11 @@ import java.util.Map;
 
 public class EmployeeService implements Service<Employee> {
     private EmployeeManage employeeManage;
+
+    public Page<Employee> getPagination() {
+        return pagination;
+    }
+
     private Page<Employee> pagination;
 
     private String[] tableHead = new String[]{
@@ -30,6 +35,8 @@ public class EmployeeService implements Service<Employee> {
         var find = this.employeeManage.get(id);
         return (find != null && find.empId != -1);
     }
+
+
 
     public void update(Employee e){
         this.employeeManage.update(e);

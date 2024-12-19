@@ -2,15 +2,14 @@ package su.kami.demo.Controllers.Rest;
 
 import com.google.gson.reflect.TypeToken;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import su.kami.demo.Models.Employee;
 import su.kami.demo.Models.ResponseObject;
 import su.kami.demo.Services.EmployeeService;
 import su.kami.demo.Shared.SharedStatics;
 import su.kami.demo.utils.ResponseHelper;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/submit/employee")
@@ -20,6 +19,19 @@ public class EmployeeRest {
 
     void fix(){
         if (employeeService == null) { this.employeeService = (EmployeeService)SharedStatics.dynamicShared.services.get("EmployeeService"); }
+    }
+
+    @GetMapping("/page/{page}")
+    public void changePage(@PathVariable int page, HttpServletRequest request ) {
+        fix();
+        var maxPage = 0;
+        try {
+            maxPage = employeeService.getPagination().getTableTotalPages();
+            if(maxPage < page) request.getSession().setAttribute("currentPage", maxPage);
+            else request.getSession().setAttribute("currentPage", page);
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     @PostMapping("/update")

@@ -1,6 +1,8 @@
-function submit(json, responseElementId = "response"){
+function submit(url, content, type = "get", responseElementId = "response"){
     let response = document.getElementById(responseElementId);
-
+    let xhr = new XMLHttpRequest();
+    xhr.open(type, url);
+    
 }
 
 const presetFormulae = (type) => {
