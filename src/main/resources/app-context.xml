@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- Enable annotation-driven MVC -->
+    <mvc:annotation-driven />
+
+    <context:component-scan base-package="su.kami.demo.Controllers"/>
+    <bean id="MyConn" class="su.kami.demo.utils.MyConn" init-method="create" >
+        <constructor-arg value="root" />
+        <constructor-arg value="7355608" />
+        <constructor-arg value="sellcenter" />
+<!--        <constructor-arg value="false" />-->
+        <constructor-arg value="true" />
+        <constructor-arg value="127.0.0.1:3306" />
+    </bean>
+
+    <bean id="EmployeeDAO" class="su.kami.demo.DataAccess.DAO.EmployeeManage">
+        <constructor-arg name="connection" ref="MyConn" type="su.kami.demo.utils.MyConn" />
+    </bean>
+
+    <bean id="TraderDAO" class="su.kami.demo.DataAccess.DAO.RelatedTrader">
+        <constructor-arg name="connection" ref="MyConn" type="su.kami.demo.utils.MyConn" />
+    </bean>
+
+    <bean id="MainSrvc" class="su.kami.demo.Services.BaseService" >
+        <constructor-arg ref="EmployeeDAO" />
+        <constructor-arg ref="TraderDAO" />
+    </bean>
+
+
+    <bean id="employeeService" class="su.kami.demo.Services.EmployeeService" >
+        <constructor-arg ref="EmployeeDAO" />
+    </bean>
+</beans>

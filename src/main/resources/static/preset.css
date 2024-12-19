@@ -1,0 +1,20 @@
+thead, tbody{
+    display: table;
+    width: 100%;
+}
+thead {
+    margin: .3rem 0 .7rem;
+    font-style: italic;
+}
+tbody{
+    margin-bottom: .3rem;
+}
+
+.fix-spin .hover\:animate-spin{
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    to{
+        rotate: 360deg;
+    }
+}
