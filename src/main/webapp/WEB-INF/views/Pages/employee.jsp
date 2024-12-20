@@ -56,17 +56,17 @@
         </div>
         <div class="flex flex-shrink flex-col gap-3.5 w-full col-span-2 md:col-span-1 min-w-[175px] max-w-full grid-cols-1 side h-full? bg-slate-100/90 shadow-md rounded-lg p-5 ">
 
-                <a href="/employee#show">
+                <a href="<c:url value="/employee#show"/>">
                     <div class="p-3 px-3.5 rounded-lg border shadow-md transition hover:shadow-lg scale-100 hover:scale-105 active:shadow active:scale-95 select-none cursor-pointer bg-slate-200/80 hover:bg-slate-200 active:bg-slate-300/50 ">
                         List All
                     </div>
                 </a>
-                <a href="/employee#new">
+                <a href="<c:url value="/employee#new"/>">
                     <div class="p-3 px-3.5 rounded-lg border shadow-md transition hover:shadow-lg scale-100 hover:scale-105 active:shadow active:scale-95 select-none cursor-pointer bg-slate-200/80 hover:bg-slate-200 active:bg-slate-300/50 ">
                         Create/Update
                     </div>
                 </a>
-                <a href="/employee#remove">
+                <a href="<c:url value="/employee#remove"/>">
                     <div class="p-3 px-3.5 rounded-lg border shadow-md transition hover:shadow-lg scale-100 hover:scale-105 active:shadow active:scale-95 select-none cursor-pointer bg-slate-200/80 hover:bg-slate-200 active:bg-slate-300/50 ">
                         Remove (prompt)
                     </div>

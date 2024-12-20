@@ -50,25 +50,31 @@ public class EmployeeService implements Service<Employee> {
 
     public String getPagedHtmlTable(int pageNumber, int pageSize, String tableClasses, String cellClasses) {
         if(pageSize == 0) pageSize = 8;
+        String result = "";
         try{
             pagination.stateHasChanged();
             pagination.setPageSize(pageSize);
             pagination.gotoPage(pageNumber);
+
+            result = SharedStatics.publicTableHelper
+                    .giveHtmlTable(
+                            this.tableHead,
+                            "text-left inline-block? border-l border-r border-slate-500 px-1 font-semibold text-lg",
+                            null,
+                            SharedStatics.publicTableHelper.toMappedStrings(pagination.pageContent),
+                            cellClasses,
+                            null,
+                            (Map.of("class", tableClasses)),
+                            false
+                    );
+
         }catch(Exception e){
             e.printStackTrace();
-            return "500-? Internal Server Error: " + e.toString();
+            return "No Content Returned.";
+//            return "500-? Internal Server Error: " + e.toString();
         }
-        return SharedStatics.publicTableHelper
-                .giveHtmlTable(
-                        this.tableHead,
-                        "text-left inline-block? border-l border-r border-slate-500 px-1 font-semibold text-lg",
-                        null,
-                        SharedStatics.publicTableHelper.toMappedStrings(pagination.pageContent),
-                        cellClasses,
-                        null,
-                        (Map.of("class", tableClasses)),
-                        false
-                );
+
+        return result;
     }
 
     @Override

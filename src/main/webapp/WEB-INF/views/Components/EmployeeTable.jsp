@@ -68,6 +68,10 @@
                 break;
 
             default:
+                // because the backend restful api is GET so only will refresh after confirmed the get request sent
+                // this will cause some possibility of cannot reach the newest data thru session.
+                // because... what if the database looked up for too long?
+
                 return;
         }
 
