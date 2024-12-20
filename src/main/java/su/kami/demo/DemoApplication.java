@@ -27,7 +27,7 @@ public class DemoApplication {
 				SharedStatics.getServices(new ClassPathXmlApplicationContext("app-context.xml"));
 
 		SharedStatics.publicTableHelper = new MyTableHelper<String>();
-		SharedStatics.publicTableHelper.inDebug();
+//		SharedStatics.publicTableHelper.inDebug();
 
 		var builder = new GsonBuilder();
 		builder.registerTypeAdapter(Date.class, new GsonDateHelper());

@@ -1,5 +1,6 @@
 package su.kami.demo.utils.QueriedPageTools;
 
+import com.google.gson.Gson;
 import su.kami.demo.DataAccess.Interfaces.DAO;
 
 import java.util.ArrayList;
@@ -58,9 +59,24 @@ public class Page<T> {
         this.currentPage = currentPage;
     }
 
-
     public Page(DAO<T> accessAgent) {
         this.accessAgent = accessAgent;
+        this.pageSize = 8;
+        try {
+            stateHasChanged();
+        } catch (PaginationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Page(DAO<T> accessAgent, int pageSize) {
+        this.accessAgent = accessAgent;
+        this.pageSize = pageSize;
+        try {
+            stateHasChanged();
+        } catch (PaginationException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void gotoNextPage() throws PaginationException{
@@ -75,9 +91,14 @@ public class Page<T> {
         if(accessAgent == null) throw new PaginationException("Unset Data Access: accessAgent is null");
         stateHasChanged();
         if(page > this.tableTotalPages) throw new PaginationException("Invalid page number: overflow");
-        if(page == this.currentPage) return; // if page not changing, do nothing.
-        pageContent = accessAgent.get(Page.getLimit(page > this.currentPage, this));
+//        if(page == this.currentPage && this.pageContent != null) return; // if page not changing, do nothing.
+//        else
+        String limit = "";
+        if(page == this.currentPage) limit = (Page.getLimit(this.currentPage, this.pageSize));
+        else limit = Page.getLimit(page > this.currentPage, this);
+        this.pageContent = accessAgent.get(limit);
         this.currentPage = page;
+        System.out.println("GetPage " + this.currentPage + " GetBy: " + limit);
     }
 
     public void updateTotalPages() throws PaginationException{
@@ -98,6 +119,8 @@ public class Page<T> {
             this.pageContent = new ArrayList<T>(){};
         }
         updateNeighbours();
+//        System.out.println((new Gson()).toJson(this));
+        System.out.println("Page changed to: " + this.currentPage);
     }
 
     public void updateNeighbours(){
@@ -126,5 +149,9 @@ public class Page<T> {
                 at(pageInstance.currentPage + 1, pageInstance.pageSize) :
                 at(pageInstance.currentPage - 1, pageInstance.pageSize) )
                 + " ");
+    }
+
+    public static String getLimit(int jumpTo, int size){
+        return (" limit " + size + " offset " + ( at(jumpTo, size) ) + " ");
     }
 }

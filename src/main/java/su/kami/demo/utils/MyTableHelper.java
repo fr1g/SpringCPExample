@@ -24,7 +24,7 @@ public class MyTableHelper<T> {
 
         StringBuilder result = new StringBuilder("\n<tr>\n");
         for(String x : items){
-            result.append(NL).append(requiringTableHead ? "<th " : "<td ").append(cellPresetStyle).append(" ").append(cellClassName).append(" >\n");
+            result.append(NL).append(requiringTableHead ? "<th " : "<td ").append(cellPresetStyle).append(" class=\"").append(cellClassName).append("\" >\n");
             result.append((x == null) ?
                             this.combine(now, "no_content", true) :
                             this.combine(now, x, true));
@@ -38,15 +38,15 @@ public class MyTableHelper<T> {
     }
 
     public String giveHtmlTable(String[] head, List<T[]> body){
-        return this.giveHtmlTable(head, null, null, body, null, null, null);
+        return this.giveHtmlTable(head, null, null, body, null, null, null, false);
     }
 
-    public String giveHtmlTable(String[] head, List<T[]> body, Map<String, String> tablePresetAttributes){
-        return this.giveHtmlTable(head, null, null, body, null, null, tablePresetAttributes);
+    public String giveHtmlTable(String[] head, List<T[]> body, Map<String, String> tablePresetAttributes, boolean separate){
+        return this.giveHtmlTable(head, null, null, body, null, null, tablePresetAttributes, separate);
     }
 
     public String giveHtmlTable(String[] head, String headClass, List<T[]> body, String bodyCellClass, Map<String, String> tablePresetAttributes){
-        return this.giveHtmlTable(head, headClass, null, body, bodyCellClass, null, tablePresetAttributes);
+        return this.giveHtmlTable(head, headClass, null, body, bodyCellClass, null, tablePresetAttributes, false);
     }
 
     public String giveHtmlTable(
@@ -56,7 +56,8 @@ public class MyTableHelper<T> {
             List<T[]> body,
             String bodyCellClassName,
             String bodyCellPresetStyle,
-            Map<String, String> tablePresetAttributes
+            Map<String, String> tablePresetAttributes,
+            boolean usingSeparatedTableForm
     ){
         if(headClassName == null) headClassName = "";
         if(headPresetStyle == null) headPresetStyle = "";
@@ -64,7 +65,10 @@ public class MyTableHelper<T> {
         if(bodyCellPresetStyle == null) bodyCellPresetStyle = "";
         if(tablePresetAttributes == null) tablePresetAttributes = Map.of("", "");
 
-        String tableHead = giveHtmlTableRow(head, headClassName, headPresetStyle, true);
+        String tableHead = usingSeparatedTableForm ?
+                giveHtmlTableRow(head, headClassName, headPresetStyle, true) :
+                giveHtmlTableRow(head, ("table_head@MyTableHelper " + headClassName), headPresetStyle, false)
+                ;
         StringBuilder tableBody = new StringBuilder();
         StringBuilder table = new StringBuilder();
         for(T[] rows : body)
@@ -73,17 +77,23 @@ public class MyTableHelper<T> {
         table.append("<table ");
         for(Map.Entry<String, String> x: tablePresetAttributes.entrySet())
             table.append(" ").append(x.getKey()).append("=\"").append(x.getValue()).append("\" ");
-        table.append(">\n<thead>");
-        table.append(tableHead);
-        table.append("</thead>\n<tbody>\n");
-        table.append(tableBody);
-        table.append("\n</tbody>");
-        table.append("\n</table>");
-
+        if(usingSeparatedTableForm){
+            table.append(">\n<thead>");
+            table.append(tableHead);
+            table.append("</thead>\n<tbody>\n");
+            table.append(tableBody);
+            table.append("\n</tbody>");
+            table.append("\n</table>");
+        } else{
+            table.append(">\n");
+            table.append(tableHead);
+            table.append(tableBody);
+            table.append("\n</table>");
+        }
         if(this.debug) {
             System.out.println("\nRequired New HTML Table, which looks like: ");
             this.printTable(body, head);
-            System.out.print("\bTable as HTML sent. @" + (new Date()).getTime());
+            System.out.print("\bTable as HTML sent. @" + (new Date()).getTime() + NL);
         }
         return table.toString();
     }

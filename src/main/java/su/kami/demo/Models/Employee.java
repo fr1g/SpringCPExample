@@ -13,6 +13,13 @@ public class Employee implements  InternalModel{
     public Date dateJoin =  new Date(); // default now
     public EEmpType type;
 
+    public Employee(int id){
+        this.empId = id;
+        name = "";
+        contact = "";
+        this.type = null;
+    }
+
     public Employee(int empId, String name, String contact, Date dateJoin, EEmpType type) {
         this.empId = empId;
         this.name = name;

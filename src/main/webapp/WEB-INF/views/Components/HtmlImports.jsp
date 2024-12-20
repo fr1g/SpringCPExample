@@ -15,3 +15,4 @@
         }
     }
 </script>
+<script src="/postHelper.js"></script>

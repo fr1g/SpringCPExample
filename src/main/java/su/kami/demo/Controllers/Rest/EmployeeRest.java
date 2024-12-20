@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import su.kami.demo.Models.Employee;
 import su.kami.demo.Models.ResponseObject;
 import su.kami.demo.Services.EmployeeService;
+import su.kami.demo.Services.Service;
 import su.kami.demo.Shared.SharedStatics;
 import su.kami.demo.utils.ResponseHelper;
 
@@ -27,10 +28,27 @@ public class EmployeeRest {
         var maxPage = 0;
         try {
             maxPage = employeeService.getPagination().getTableTotalPages();
-            if(maxPage < page) request.getSession().setAttribute("currentPage", maxPage);
+            if(maxPage < page) request.getSession().setAttribute("currentPage", Integer.valueOf(maxPage));
             else request.getSession().setAttribute("currentPage", page);
         } catch (Exception ex){
             ex.printStackTrace();
+        }
+    }
+
+    @GetMapping("/remove/{id}")
+    public void remove(@PathVariable int id, HttpServletRequest request ) {
+        fix();
+        var message = "";
+        try {
+            employeeService.delete(new Employee(id));
+            message = "Remove Successfully: " + id; // why da' fvck the java have no template string as c#?
+        } catch (Exception ex){
+            ex.printStackTrace();
+            var isReallyExist = employeeService.isExist(id);
+            message = "Error occurred: " + (isReallyExist ? "@Unknown" : "@NotFound") + " @" + ex.getMessage();
+            // idk
+        } finally {
+            request.getSession().setAttribute("_msg", message);
         }
     }
 

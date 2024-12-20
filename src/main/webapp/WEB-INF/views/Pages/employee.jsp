@@ -35,9 +35,6 @@
     function submitNew(){
 
     }
-    function requirePage(page){
-
-    } // ?
 
     window.addEventListener("load", viewLoadControl);
     window.addEventListener("hashchange", (e) => {
@@ -49,7 +46,7 @@
 
     <div class="grid w-5/6 lg:w-3/5 md:w-4/5 bg-black? grid p-5 mx-auto grid-cols-4 gap-3.5">
         <h1 class="p-5 font-bold text-5xl py-6 col-span-full text-slate-900">Employee Management</h1>
-        <div class="bg-slate-100/90 shadow-md rounded-lg col-span-2 md:col-span-3 overflow-y-hidden overflow-x-auto">
+        <div class="bg-slate-100/90 shadow-md rounded-lg col-span-2 md:col-span-3 ">
             <div id="tableContainer" style="display: none">
                 <%@include file="./../Components/EmployeeTable.jsp" %>
             </div>

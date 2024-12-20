@@ -13,18 +13,18 @@ import java.util.Map;
 
 public class EmployeeService implements Service<Employee> {
     private EmployeeManage employeeManage;
-
-    public Page<Employee> getPagination() {
-        return pagination;
-    }
-
     private Page<Employee> pagination;
 
     private String[] tableHead = new String[]{
-            "EMP ID", "NAME", "CONTACT", "DATE of JOIN (local datetime)", "WORKTYPE"
+            "#", "NAME", "CONTACT", "DATE of JOIN (local datetime)", "WORKTYPE"
     };
 
-//    private
+    public Page<Employee> getPagination() {
+        try {
+            pagination.stateHasChanged();
+        }catch (Exception e) {}
+        return pagination;
+    }
 
     public EmployeeService(EmployeeManage employeeManage) {
         this.employeeManage = employeeManage;
@@ -36,7 +36,9 @@ public class EmployeeService implements Service<Employee> {
         return (find != null && find.empId != -1);
     }
 
+    public Employee get(int id){ return employeeManage.get(id); }
 
+    public void delete(Employee e){ this.employeeManage.delete(e); }
 
     public void update(Employee e){
         this.employeeManage.update(e);
@@ -48,24 +50,24 @@ public class EmployeeService implements Service<Employee> {
 
     public String getPagedHtmlTable(int pageNumber, int pageSize, String tableClasses, String cellClasses) {
         if(pageSize == 0) pageSize = 8;
-        var page = pagination;
         try{
-            page.stateHasChanged();
-            page.setPageSize(pageSize);
-            page.gotoPage(pageNumber);
+            pagination.stateHasChanged();
+            pagination.setPageSize(pageSize);
+            pagination.gotoPage(pageNumber);
         }catch(Exception e){
             e.printStackTrace();
-            return "500 Internal Server Error: " + e.toString();
+            return "500-? Internal Server Error: " + e.toString();
         }
         return SharedStatics.publicTableHelper
                 .giveHtmlTable(
                         this.tableHead,
+                        "text-left inline-block? border-l border-r border-slate-500 px-1 font-semibold text-lg",
                         null,
-                        null,
-                        SharedStatics.publicTableHelper.toMappedStrings(page.pageContent),
+                        SharedStatics.publicTableHelper.toMappedStrings(pagination.pageContent),
                         cellClasses,
                         null,
-                        (Map.of("class", tableClasses))
+                        (Map.of("class", tableClasses)),
+                        false
                 );
     }
 

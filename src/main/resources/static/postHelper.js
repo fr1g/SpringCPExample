@@ -1,8 +1,12 @@
-function submit(url, content, type = "get", responseElementId = "response"){
-    let response = document.getElementById(responseElementId);
+function submit(url, content, type = "get", callback = () => {}, callbackNeedSelfAsParam = false){
     let xhr = new XMLHttpRequest();
     xhr.open(type, url);
-    
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4)
+            if(callbackNeedSelfAsParam) callback(xhr);
+            else callback();
+    }
+    xhr.send(content);
 }
 
 const presetFormulae = (type) => {

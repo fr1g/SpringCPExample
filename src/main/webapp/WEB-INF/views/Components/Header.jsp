@@ -27,8 +27,10 @@
     if (!_CurrentUri.equals("unset")) session.setAttribute("_uri ", _CurrentUri);
 %>
 <body>
-    <div class="fixed w-full p-2 bg-slate-600 flex flex-shrink px-5 gap-5 shadow-lg">
-        <div class="text-xl font-bold mb-1 text-white ">Example</div>
+    <div class="fixed w-full p-2 bg-slate-600 flex flex-shrink px-5 gap-5 shadow-lg header" style="z-index: 999">
+        <div class="text-xl font-bold mb-1 text-white ">
+            <a class="w-full h-full opacity-80 hover:opacity-100 transition" href="/">Example</a>
+        </div>
         <div class="text-lg ?font-semibold mb-1 text-white ">
             <a class="w-full h-full border-b-0 hover:border-b-2 border-slate-100 transition" href="employee/" target="_self">
                 Employee
