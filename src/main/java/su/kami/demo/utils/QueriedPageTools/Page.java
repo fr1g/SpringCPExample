@@ -98,7 +98,7 @@ public class Page<T> {
         else limit = Page.getLimit(page > this.currentPage, this);
         this.pageContent = accessAgent.get(limit);
         this.currentPage = page;
-        System.out.println("GetPage " + this.currentPage + " GetBy: " + limit);
+//        System.out.println("GetPage " + this.currentPage + " GetBy: " + limit);
     }
 
     public void updateTotalPages() throws PaginationException{
@@ -120,7 +120,7 @@ public class Page<T> {
         }
         updateNeighbours();
 //        System.out.println((new Gson()).toJson(this));
-        System.out.println("Page changed to: " + this.currentPage);
+//        System.out.println("Page changed to: " + this.currentPage);
     }
 
     public void updateNeighbours(){

@@ -47,14 +47,14 @@
     <div class="grid w-5/6 lg:w-3/5 md:w-4/5 bg-black? grid p-5 mx-auto grid-cols-4 gap-3.5">
         <h1 class="p-5 font-bold text-5xl py-6 col-span-full text-slate-900">Employee Management</h1>
         <div class="bg-slate-100/90 shadow-md rounded-lg col-span-2 md:col-span-3 ">
-            <div id="tableContainer" style="display: none">
+            <div id="tableContainer" style="display: none" class="h-full">
                 <%@include file="./../Components/EmployeeTable.jsp" %>
             </div>
-            <div id="formContainer" style="display: none">
-                form
+            <div id="formContainer" style="display: none" class="h-full relative">
+                <%@include file="./../Components/EmployeeInputForm.jsp"%>
             </div>
         </div>
-        <div class="flex flex-shrink flex-col gap-3.5 w-full col-span-2 md:col-span-1 min-w-[175px] max-w-full grid-cols-1 side h-full? bg-slate-100/90 shadow-md rounded-lg p-5 ">
+        <div class="flex flex-shrink flex-col gap-3.5 w-full col-span-2 md:col-span-1 min-w-[175px] max-w-full grid-cols-1 side h-fit bg-slate-100/90 shadow-md rounded-lg p-5 ">
 
                 <a href="<c:url value="/employee#show"/>">
                     <div class="p-3 px-3.5 rounded-lg border shadow-md transition hover:shadow-lg scale-100 hover:scale-105 active:shadow active:scale-95 select-none cursor-pointer bg-slate-200/80 hover:bg-slate-200 active:bg-slate-300/50 ">

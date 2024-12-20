@@ -26,7 +26,7 @@ const presetFormulae = (type) => {
                 name: "",
                 contact: "",
                 dateJoin: new Date(),
-                type
+                type: 0
             };
 
         default:
@@ -38,7 +38,7 @@ class ResponseObject{
     type;
     certificated;
     token;
-    content;
+    content; // type: from presetFormulae
 
     constructor(type, certificated, token){
         this.type = type;
@@ -47,4 +47,25 @@ class ResponseObject{
 
 
     }
+}
+
+function dateToTimestamp(dateString) {
+    // 确保日期格式正确
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+        throw new Error('日期格式必须是 yyyy-mm-DD. claimed: ' + dateString);
+    }
+
+    // 将日期字符串分割成年、月、日
+    const parts = dateString.split('-');
+    const year = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1; // 月份是从0开始的
+    const day = parseInt(parts[2], 10);
+
+    // 创建一个新的Date对象
+    const date = new Date(year, month, day);
+
+    // 转换为时间戳（秒）
+    const timestamp = Math.floor(date.getTime() / 1000);
+
+    return timestamp;
 }

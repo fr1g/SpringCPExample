@@ -62,7 +62,10 @@
                 break;
 
             case "next":
-                submit('submit/employee/page/<%=pageNumber + 1%>', null, "get", () => {
+                if(!e.shiftKey) submit('submit/employee/page/<%=pageNumber + 1%>', null, "get", () => {
+                    window.location.reload()
+                });
+                else submit('submit/employee/page/<%=totalPage%>', null, "get", () => {
                     window.location.reload()
                 });
                 break;
