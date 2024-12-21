@@ -5,6 +5,7 @@ import org.springframework.context.ApplicationContext;
 import su.kami.demo.Services.BaseService;
 import su.kami.demo.Services.EmployeeService;
 import su.kami.demo.Services.Service;
+import su.kami.demo.Services.TraderService;
 import su.kami.demo.utils.MyTableHelper;
 import su.kami.demo.utils.QueriedPageTools.Page;
 
@@ -19,8 +20,9 @@ public class SharedStatics {
 
     public static DynamicShared getServices(ApplicationContext context) {
         var dynamicShared = new DynamicShared();
-        dynamicShared.services.put("BaseService", (BaseService) context.getBean("MainSrvc", BaseService.class));
+        dynamicShared.services.put("BaseService", (BaseService) context.getBean("baseService", BaseService.class));
         dynamicShared.services.put("EmployeeService", (EmployeeService) context.getBean("employeeService", EmployeeService.class));
+        dynamicShared.services.put("TraderService", (TraderService) context.getBean("traderService", TraderService.class));
         return dynamicShared;
     }
 }

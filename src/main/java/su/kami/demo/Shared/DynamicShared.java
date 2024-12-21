@@ -8,7 +8,7 @@ import java.util.Map;
 public class DynamicShared {
     // @Singleton
 
-    public Map<String, Service> services;
+    public Map<String, Service<?>> services;
 
     public DynamicShared() {
         services = new HashMap<>();

@@ -99,11 +99,6 @@ public class MyTableHelper<T> {
     }
 
 
-
-
-
-
-
     public String[] toStrings(Object obj){
         // here to use reflect !!!
         Class<?> c = obj.getClass();

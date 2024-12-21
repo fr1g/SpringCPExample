@@ -57,3 +57,8 @@ tbody>tr{
     cursor: not-allowed;
     pointer-events: none;
 }
+
+*{
+    mix-blend-mode: revert;
+    /*filter: invert(1);*/
+}

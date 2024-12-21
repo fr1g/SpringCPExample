@@ -7,6 +7,7 @@ public class ResponseHelper {
     public static ResponseEntity<String> Return(){
         return ResponseEntity.status(418).body("I'm a teapot!");
     }
+    // this one inherited from Lilac-Domine
 
     public static ResponseEntity<String> Return(int code){
         return ResponseEntity.status(code).body("EMPTY");

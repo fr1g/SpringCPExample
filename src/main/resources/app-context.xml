@@ -26,7 +26,7 @@
         <constructor-arg name="connection" ref="MyConn" type="su.kami.demo.utils.MyConn" />
     </bean>
 
-    <bean id="MainSrvc" class="su.kami.demo.Services.BaseService" >
+    <bean id="baseService" class="su.kami.demo.Services.BaseService" >
         <constructor-arg ref="EmployeeDAO" />
         <constructor-arg ref="TraderDAO" />
     </bean>
@@ -34,5 +34,8 @@
 
     <bean id="employeeService" class="su.kami.demo.Services.EmployeeService" >
         <constructor-arg ref="EmployeeDAO" />
+    </bean>
+    <bean id="traderService" class="su.kami.demo.Services.TraderService" >
+        <constructor-arg ref="TraderDAO" />
     </bean>
 </beans>

@@ -91,8 +91,7 @@ public class Page<T> {
         if(accessAgent == null) throw new PaginationException("Unset Data Access: accessAgent is null");
         stateHasChanged();
         if(page > this.tableTotalPages) throw new PaginationException("Invalid page number: overflow");
-//        if(page == this.currentPage && this.pageContent != null) return; // if page not changing, do nothing.
-//        else
+//
         String limit = "";
         if(page == this.currentPage) limit = (Page.getLimit(this.currentPage, this.pageSize));
         else limit = Page.getLimit(page > this.currentPage, this);

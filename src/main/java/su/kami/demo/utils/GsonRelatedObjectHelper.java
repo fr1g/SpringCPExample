@@ -8,9 +8,10 @@ import su.kami.demo.DataAccess.Interfaces.DAO;
 import su.kami.demo.Models.InternalModel;
 
 import java.lang.reflect.Type;
-import java.util.Date;
 
-public class GsonRelatedObjectHelper<T> implements JsonDeserializer<InternalModel> {
+import static su.kami.demo.utils.IsExtendedCheckHelper.isExtended;
+
+public class GsonRelatedObjectHelper<T extends InternalModel> implements JsonDeserializer<T> {
 
     private DAO<T> accessAgent;
 
@@ -18,11 +19,17 @@ public class GsonRelatedObjectHelper<T> implements JsonDeserializer<InternalMode
         super();
         this.accessAgent = accessAgent;
     }
-
+// Gson is Son Of Nobody
     @Override
-    public InternalModel deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+    public T deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         try {
-            return (InternalModel) accessAgent.get(jsonElement.getAsInt());
+            if (isExtended(type, InternalModel.class)) {
+                var hewlett = jsonElement.getAsInt();
+                return accessAgent.get(hewlett);
+            } else
+                return jsonDeserializationContext.deserialize(jsonElement, type);
+
+
         }catch (Exception e) {
             e.printStackTrace();
         }

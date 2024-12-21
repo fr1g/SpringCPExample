@@ -44,8 +44,6 @@ class ResponseObject{
         this.type = type;
         this.certificated = certificated;
         this.token = token;
-
-
     }
 }
 
@@ -64,8 +62,7 @@ function dateToTimestamp(dateString) {
     // 创建一个新的Date对象
     const date = new Date(year, month, day);
 
-    // 转换为时间戳（秒）
-    const timestamp = Math.floor(date.getTime() / 1000);
+    const timestamp = Math.floor(date.getTime());
 
     return timestamp;
 }
