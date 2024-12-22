@@ -97,7 +97,7 @@ public class EmployeeManage implements DAO<Employee> {
         }catch(Exception ex){
             ex.printStackTrace();
         }
-        System.out.println("done.");
+//        System.out.println("done.");
     }
 
     @Override
