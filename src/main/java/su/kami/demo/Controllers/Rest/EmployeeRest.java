@@ -1,5 +1,6 @@
 package su.kami.demo.Controllers.Rest;
 
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,11 +67,21 @@ public class EmployeeRest {
                                 )
                             ).content;
 
+            System.out.println((new Gson()).toJson(got));
+
 
             exist = employeeService.isExist(got.empId);
-            if (exist)
+            if (exist){
+                Employee before = employeeService.get(got.empId);
+                if(got.dateJoin == null) got.dateJoin = before.dateJoin;
+                if(got.contact.equals("~")) got.contact = before.contact;
+                if(got.name.equals("~")) got.name = before.name;
                 employeeService.update(got);
-            else employeeService.insert(got);
+            }
+            else {
+                if(got.dateJoin == null || got.contact.equals("~") || got.name.equals("~")) return ResponseHelper.Return(405, "E@Ilegal-Data");
+                employeeService.insert(got);
+            }
 
             System.out.println(got.name);
         }catch (Exception ex){

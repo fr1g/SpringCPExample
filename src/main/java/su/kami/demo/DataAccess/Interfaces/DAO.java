@@ -11,7 +11,7 @@ public interface DAO<T>{
     List<T> get(String limit);
     void update(T t);
     void delete(T t);
-    void add(T t);
+    void add(T t) throws Exception;
 
     int count(String requirement);
 }

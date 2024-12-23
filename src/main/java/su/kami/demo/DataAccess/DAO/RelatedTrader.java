@@ -3,6 +3,7 @@ package su.kami.demo.DataAccess.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,7 +88,7 @@ public class RelatedTrader implements DAO<Trader> {
     }
 
     @Override
-    public void add(Trader trader) {
+    public void add(Trader trader) throws Exception {
         try{
             PreparedStatement preparedStatement = connection.prepareStatement("insert into traders(contact, name, type, reg_by, note) value(?, ?, ?, ?, ?)");
             preparedStatement.setString(1, trader.contact);
@@ -97,6 +98,9 @@ public class RelatedTrader implements DAO<Trader> {
             preparedStatement.setString(5, trader.note);
             preparedStatement.executeUpdate();
         }catch (Exception ex){
+            if(ex instanceof SQLIntegrityConstraintViolationException){
+                throw new Exception("No such registrar: " + trader.registrar.empId);
+            }
             ex.printStackTrace();
         }
     }

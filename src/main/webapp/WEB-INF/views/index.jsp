@@ -23,7 +23,13 @@
                 </div>
                 <div class=" bg-slate-100/90 h-full shadow-md rounded-lg p-5  block ">
                     <h5 class="text-xl font-bold mb-1.5">View the <br>Combined table of all</h5>
-
+                    <div class="grid grid-cols-2 gap-5 translate-y-1 h-full?">
+                        <a href="/employee" target="_blank">
+                            <div class="p-3 px-3.5 rounded-lg border shadow-md transition hover:shadow-lg scale-100 hover:scale-105 active:shadow active:scale-95 select-none cursor-pointer bg-slate-200/80 hover:bg-slate-200 active:bg-slate-300/50 ">
+                                View the Employee BasePage &gt;
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -56,12 +62,12 @@
                 <div class="grid grid-cols-2 gap-5 translate-y-1">
                     <a href="/employee" target="_blank">
                         <div class="p-3 px-3.5 rounded-lg border shadow-md transition hover:shadow-lg scale-100 hover:scale-105 active:shadow active:scale-95 select-none cursor-pointer bg-slate-200/80 hover:bg-slate-200 active:bg-slate-300/50 ">
-                            View the Employee BasePage &gt;
+                            View the Traders BasePage &gt;
                         </div>
                     </a>
                     <a href="/employee#new" target="_blank">
                         <div class="p-3 px-3.5 rounded-lg border shadow-md transition hover:shadow-lg scale-100 hover:scale-105 active:shadow active:scale-95 select-none cursor-pointer bg-slate-200/80 hover:bg-slate-200 active:bg-slate-300/50 ">
-                            Create a record of Employee &gt;
+                            Create a record of Traders &gt;
                         </div>
                     </a>
                 </div>

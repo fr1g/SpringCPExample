@@ -35,7 +35,7 @@ public class DemoApplication {
 		builder.registerTypeAdapter(Date.class, new GsonDateHelper());
 		builder.registerTypeAdapter(EEmpType.class, new GsonEnumTemplatedHelper<EEmpType>());
 		builder.registerTypeAdapter(ETraderType.class, new GsonEnumTemplatedHelper<ETraderType>());
-		builder.registerTypeAdapter(Trader.class, new GsonRelatedObjectHelper<Trader>((RelatedTrader)SharedStatics.dynamicShared.services.get("TraderService").lendAgent()));
+//		builder.registerTypeAdapter(Trader.class, new GsonRelatedObjectHelper<Trader>((RelatedTrader)SharedStatics.dynamicShared.services.get("TraderService").lendAgent()));
 
 		SharedStatics.jsonHandler = builder.create();
 

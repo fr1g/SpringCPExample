@@ -10,7 +10,7 @@
     <input class="col-span-2 block px-1.5 rounded-lg p-1 shadow focus:shadow-lg transition" type="text" required />
 
     <label class="text-right translate-y-1">Date of Join</label>
-    <input class="col-span-2 block px-1.5 rounded-lg p-1 shadow focus:shadow-lg transition" type="date" required />
+    <input class="col-span-2 block px-1.5 rounded-lg p-1 shadow focus:shadow-lg transition" type="date" />
 
     <label class="text-right translate-y-1">Type</label>
     <select class="block col-span-2 rounded-lg p-1.5 shadow focus:shadow-lg transition" id="type">
@@ -31,14 +31,23 @@
     form.addEventListener("submit", (e) => {
         e.preventDefault();
         let inputs = document.getElementsByTagName("input");
-        filled.name = inputs[0].value;
+
+        filled.empId = inputs[0].value.includes("#") ? parseInt(inputs[0].value.split("#")[0]) : -1;
+        filled.name = inputs[0].value.includes("#") ? inputs[0].value.split("#")[1] : inputs[0].value;
         filled.contact = inputs[1].value;
         filled.dateJoin = dateToTimestamp(inputs[2].value);
-        filled.empId = -1;
         filled.type = document.getElementById("type").value;
         let submission = new ResponseObject("Employee", true, "-");
         submission.content = filled;
-        submit("submit/employee/update", JSON.stringify(submission), "post", (xhr) => {if(xhr.status == 200) {alert("SuCCessful"); window.location.reload();}}, true);
+        console.log(filled)
+        submit("submit/employee/update", JSON.stringify(submission), "post", (xhr) => {
+            if(xhr.status == 200) {
+                alert("SuCCessful");
+                window.location.reload();
+            } else {
+                alert("Wrong Input of Form");
+            }
+        }, true);
     });
 
 

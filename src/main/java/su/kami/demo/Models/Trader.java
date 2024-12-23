@@ -36,4 +36,13 @@ public class Trader implements InternalModel{
         this.registrar = registrar;
         this.note = "None";
     }
+
+    public Trader(int id) {
+        this.traderID = id;
+        this.contact = null;
+        this.name = null;
+        this.type = null;
+        this.registrar = null;
+        this.note = "None";
+    }
 }
