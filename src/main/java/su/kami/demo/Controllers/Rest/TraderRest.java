@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import su.kami.demo.Models.Employee;
 import su.kami.demo.Models.ResponseObject;
 import su.kami.demo.Models.Trader;
+import su.kami.demo.Models.enums.ETraderType;
 import su.kami.demo.Services.EmployeeService;
 import su.kami.demo.Services.TraderService;
 import su.kami.demo.Shared.SharedStatics;
@@ -87,11 +88,12 @@ public class TraderRest {
                 if(got.registrar.empId == -1) got.registrar = before.registrar;
                 if(got.note.equals("~")) got.note = before.note;
                 if(got.type == null) got.type = before.type;
+                if(got.type == ETraderType.ALSO) got.type = before.type;
 
                 traderService.update(got);
             }
             else {
-                if(got.contact.equals("~") || got.name.equals("~") || got.registrar.empId == -1 || got.type == null)
+                if(got.contact.equals("~") || got.name.equals("~") || got.registrar.empId == -1 || got.type == null || got.type == ETraderType.ALSO)
                     return ResponseHelper.Return(405, "E@Illegal-Data");
                 else
                     traderService.insert(got);
@@ -100,6 +102,7 @@ public class TraderRest {
             System.out.println(got.name);
         }catch (Exception ex){
             if(!ex.toString().contains("such")) ex.printStackTrace();
+            // todo this place requiring a _msg or not?
             return ResponseHelper.Return(502, ex.getMessage());
         }
         return ResponseHelper.Return(200, "X@Trader " + (exist ? "updated" : "inserted") + " successfully");

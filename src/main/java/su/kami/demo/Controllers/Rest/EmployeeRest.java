@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import su.kami.demo.Models.Employee;
 import su.kami.demo.Models.ResponseObject;
+import su.kami.demo.Models.enums.EEmpType;
 import su.kami.demo.Services.EmployeeService;
 import su.kami.demo.Services.Service;
 import su.kami.demo.Shared.SharedStatics;
@@ -76,10 +77,11 @@ public class EmployeeRest {
                 if(got.dateJoin == null) got.dateJoin = before.dateJoin;
                 if(got.contact.equals("~")) got.contact = before.contact;
                 if(got.name.equals("~")) got.name = before.name;
+                if (got.type == EEmpType.ALSO) got.type = before.type;
                 employeeService.update(got);
             }
             else {
-                if(got.dateJoin == null || got.contact.equals("~") || got.name.equals("~")) return ResponseHelper.Return(405, "E@Ilegal-Data");
+                if(got.dateJoin == null || got.contact.equals("~") || got.name.equals("~") || got.type == EEmpType.ALSO) return ResponseHelper.Return(405, "E@Ilegal-Data");
                 employeeService.insert(got);
             }
 

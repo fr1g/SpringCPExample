@@ -54,8 +54,6 @@ public class BaseService implements Service<Trader> {
                 var res2 = SharedStatics.publicTableHelper.toStrings(x.registrar);
                 var combinedArray = Arrays.stream(Stream.concat(Arrays.stream(res1), Arrays.stream(res2)).toArray(String[]::new)).collect(Collectors.toCollection(ArrayList::new));
                 combinedArray.remove(this.REG_BY);
-                for(var i : combinedArray) System.out.println(i);
-                System.out.println("%%%%%");
                 content.add(combinedArray.toArray(new String[0]));
                 // todo Ужасная временная сложность... terrible time complexity...
             }

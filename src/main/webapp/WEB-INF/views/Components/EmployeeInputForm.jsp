@@ -19,6 +19,7 @@
         <option value="3">Driver</option>
         <option value="4">Supervisor</option>
         <option value="5">Manager</option>
+        <option value="10">As Before (for updating)</option>
     </select>
     <div class="placeholder col-span-full h-24"></div>
     <input type="submit" class="absolute bottom-3 right-3.5 block bg-slate-400/70 hover:bg-slate-400/100 active:bg-slate-500/90 cursor-pointer rounded-lg p-2 px-3.5 shadow-md hover:shadow-lg text-slate-50 transition" value="Confirm" />

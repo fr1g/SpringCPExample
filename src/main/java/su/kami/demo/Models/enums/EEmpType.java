@@ -1,7 +1,7 @@
 package su.kami.demo.Models.enums;
 public enum EEmpType implements EnumTemplate {
     // using ordinal() to pick resolving
-    UNKNOWN, ADMIN, WORKER, DRIVER, SUPERVISOR, MANAGER, OTHERS, WHAT, CLEANER, ELSEWHAT, IDONTKNOW;
+    UNKNOWN, ADMIN, WORKER, DRIVER, SUPERVISOR, MANAGER, OTHERS, WHAT, CLEANER, ELSEWHAT, ALSO;
 
     public static int tinify(EEmpType x){
         return x.ordinal();

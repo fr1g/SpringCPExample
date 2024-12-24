@@ -23,10 +23,11 @@ const presetFormulae = (type) => {
         case "Trader":
             return {
                 traderID: 0,
-                name: "",
                 contact: "",
-                dateJoin: new Date(),
-                type: 0
+                name: "",
+                type: 0,
+                registrar: null,
+                note: ""
             };
 
         default:

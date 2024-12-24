@@ -1,7 +1,7 @@
 package su.kami.demo.Models.enums;
 
 public enum ETraderType implements EnumTemplate {
-    Normal, Prime;
+    Normal, Prime, ALSO;
 
     public static int tinify(ETraderType x){
         return x.ordinal();
