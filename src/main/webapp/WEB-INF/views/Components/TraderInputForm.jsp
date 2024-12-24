@@ -45,5 +45,5 @@
         submission.content = filled;
         submit("/submit/trader/update", JSON.stringify(submission), "post", (xhr) => {if(xhr.status == 200) {alert("SuCCessful"); window.location.reload();} else alert("Error occurred.")}, true);
     });
-    
+
 </script>
