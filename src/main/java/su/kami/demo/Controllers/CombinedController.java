@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/combined")
 public class CombinedController {
-    @GetMapping("/")
+    @GetMapping
     public String base() {
         return "Pages/combined";
     }

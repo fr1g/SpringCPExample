@@ -45,4 +45,9 @@ public class Trader implements InternalModel{
         this.registrar = null;
         this.note = "None";
     }
+
+    @Override
+    public String toString() {
+        return "#" + this.traderID;
+    }
 }

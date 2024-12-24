@@ -1,13 +1,9 @@
 package su.kami.demo.DataAccess.DAO;
 
+import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
 
 import su.kami.demo.DataAccess.Interfaces.DAO;
 import su.kami.demo.Models.Employee;
@@ -101,7 +97,7 @@ public class EmployeeManage implements DAO<Employee> {
     }
 
     @Override
-    public void delete(Employee t) {
+    public void delete(Employee t) throws Exception {
         try {
             // if() here need to add a logic to determine whether the item is not here.
             PreparedStatement pre = this.connection.prepareStatement("delete from employees where emp_id = ?;");
@@ -111,6 +107,7 @@ public class EmployeeManage implements DAO<Employee> {
 
         } catch (Exception e) {
             // TODO: handle exception
+            if(e.toString().contains("a foreign key constraint ")) throw new Exception("Protected: Relied on by others: " + t.empId);
             e.printStackTrace();
         }
         System.out.println("done.");

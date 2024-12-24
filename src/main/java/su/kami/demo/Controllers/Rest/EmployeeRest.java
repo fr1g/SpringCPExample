@@ -29,8 +29,8 @@ public class EmployeeRest {
         var maxPage = 0;
         try {
             maxPage = employeeService.getPagination().getTableTotalPages();
-            if(maxPage < page) request.getSession().setAttribute("currentPage", Integer.valueOf(maxPage));
-            else request.getSession().setAttribute("currentPage", page);
+            if(maxPage < page) request.getSession().setAttribute("employee/currentPage", Integer.valueOf(maxPage));
+            else request.getSession().setAttribute("employee/currentPage", page);
         } catch (Exception ex){
             ex.printStackTrace();
         }
@@ -44,9 +44,9 @@ public class EmployeeRest {
             employeeService.delete(new Employee(id));
             message = "Remove Successfully: " + id; // why da' fvck the java have no template string as c#?
         } catch (Exception ex){
-            ex.printStackTrace();
+            if(!ex.toString().contains("Cannot delete or update")) ex.printStackTrace();
             var isReallyExist = employeeService.isExist(id);
-            message = "Error occurred: " + (isReallyExist ? "@Unknown" : "@NotFound") + " @" + ex.getMessage();
+            message = "Error occurred: Trying to REMOVE # " + (isReallyExist ? "@Unknown" : "@NotFound") + " @" + ex.getMessage();
             // idk
         } finally {
             request.getSession().setAttribute("_msg", message);

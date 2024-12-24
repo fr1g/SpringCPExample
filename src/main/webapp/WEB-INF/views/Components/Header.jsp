@@ -37,12 +37,12 @@
             </a>
         </div>
         <div class="text-lg ?font-semibold mb-1 text-white ">
-            <a class="w-full h-full border-b-0 hover:border-b-2 border-slate-100 transition" href="<c:url value="/employee/"/>" target="_self">
+            <a class="w-full h-full border-b-0 hover:border-b-2 border-slate-100 transition" href="<c:url value="/trader/"/>" target="_self">
                 Trader
             </a>
         </div>
         <div class="text-lg ?font-semibold mb-1 text-white ">
-            <a class="w-full h-full border-b-0 hover:border-b-2 border-slate-100 transition" href="<c:url value="/employee/"/>" target="_self">
+            <a class="w-full h-full border-b-0 hover:border-b-2 border-slate-100 transition" href="<c:url value="/combined/"/>" target="_self">
                 Combined
             </a>
         </div>

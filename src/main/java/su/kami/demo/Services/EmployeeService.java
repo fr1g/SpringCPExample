@@ -38,7 +38,7 @@ public class EmployeeService implements Service<Employee> {
 
     public Employee get(int id){ return employeeManage.get(id); }
 
-    public void delete(Employee e){ this.employeeManage.delete(e); }
+    public void delete(Employee e) throws Exception { this.employeeManage.delete(e); }
 
     public void update(Employee e){
         this.employeeManage.update(e);
@@ -65,7 +65,7 @@ public class EmployeeService implements Service<Employee> {
                             cellClasses,
                             null,
                             (Map.of("class", tableClasses)),
-                            false
+                            false, null
                     );
 
         }catch(Exception e){

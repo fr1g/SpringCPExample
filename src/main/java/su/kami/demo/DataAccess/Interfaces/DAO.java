@@ -10,7 +10,7 @@ public interface DAO<T>{
     List<T> get();
     List<T> get(String limit);
     void update(T t);
-    void delete(T t);
+    void delete(T t) throws Exception;
     void add(T t) throws Exception;
 
     int count(String requirement);

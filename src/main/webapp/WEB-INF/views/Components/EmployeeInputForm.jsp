@@ -40,7 +40,7 @@
         let submission = new ResponseObject("Employee", true, "-");
         submission.content = filled;
         console.log(filled)
-        submit("submit/employee/update", JSON.stringify(submission), "post", (xhr) => {
+        submit("/submit/employee/update", JSON.stringify(submission), "post", (xhr) => {
             if(xhr.status == 200) {
                 alert("SuCCessful");
                 window.location.reload();

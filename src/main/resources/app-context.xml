@@ -24,6 +24,7 @@
 
     <bean id="TraderDAO" class="su.kami.demo.DataAccess.DAO.RelatedTrader">
         <constructor-arg name="connection" ref="MyConn" type="su.kami.demo.utils.MyConn" />
+        <constructor-arg name="relatedRegistrar" ref="EmployeeDAO" type="su.kami.demo.DataAccess.DAO.EmployeeManage" />
     </bean>
 
     <bean id="baseService" class="su.kami.demo.Services.BaseService" >

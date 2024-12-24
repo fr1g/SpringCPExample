@@ -60,12 +60,12 @@
             <div class=" bg-slate-100/90 shadow-md rounded-lg p-5 col-span-full lg:col-span-0 ">
                 <h5 class="text-xl font-bold mb-1.5">Operations on <br><span class="font-semibold">Traders</span></h5>
                 <div class="grid grid-cols-2 gap-5 translate-y-1">
-                    <a href="/employee" target="_blank">
+                    <a href="/trader" target="_blank">
                         <div class="p-3 px-3.5 rounded-lg border shadow-md transition hover:shadow-lg scale-100 hover:scale-105 active:shadow active:scale-95 select-none cursor-pointer bg-slate-200/80 hover:bg-slate-200 active:bg-slate-300/50 ">
                             View the Traders BasePage &gt;
                         </div>
                     </a>
-                    <a href="/employee#new" target="_blank">
+                    <a href="/trader#new" target="_blank">
                         <div class="p-3 px-3.5 rounded-lg border shadow-md transition hover:shadow-lg scale-100 hover:scale-105 active:shadow active:scale-95 select-none cursor-pointer bg-slate-200/80 hover:bg-slate-200 active:bg-slate-300/50 ">
                             Create a record of Traders &gt;
                         </div>

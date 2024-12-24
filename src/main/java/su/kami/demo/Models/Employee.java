@@ -61,5 +61,10 @@ public class Employee implements  InternalModel{
 
         return ox;
     }
+
+    @Override
+    public String toString() {
+        return "#" + this.empId;
+    }
 }
 

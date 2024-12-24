@@ -11,10 +11,10 @@
     String forPrev = "", forNext = "";
     try {
 
-        if(session.getAttribute("currentPage") == null){
+        if(session.getAttribute("employee/currentPage") == null){
             pageNumber = 1;
-            session.setAttribute("currentPage", pageNumber);
-        } else pageNumber = (Integer)session.getAttribute("currentPage");
+            session.setAttribute("employee/currentPage", pageNumber);
+        } else pageNumber = (Integer)session.getAttribute("employee/currentPage");
 
 //        pagination.stateHasChanged();
         pagination.setCurrentPage(pageNumber);
@@ -29,7 +29,7 @@
         pageNumber = 1;
         e.printStackTrace();
         out.print(e);
-        out.print("CurrPage: " + session.getAttribute("currentPage"));
+        out.print("CurrPage: " + session.getAttribute("employee/currentPage"));
     }
 
     String result = service.getPagedHtmlTable(pageNumber, 0, "w-full bg-slate-200 rounded-lg p-3", "p-1");
@@ -57,16 +57,16 @@
         switch (e.target.id){
             // shall we use iframe instead? no, this is just a homework.
             case "prev":
-                submit('submit/employee/page/<%=pageNumber - 1%>', null, "get", () => {
+                submit('/submit/employee/page/<%=pageNumber - 1%>', null, "get", () => {
                     window.location.reload()
                 });
                 break;
 
             case "next":
-                if(!e.shiftKey) submit('submit/employee/page/<%=pageNumber + 1%>', null, "get", () => {
+                if(!e.shiftKey) submit('/submit/employee/page/<%=pageNumber + 1%>', null, "get", () => {
                     window.location.reload()
                 });
-                else submit('submit/employee/page/<%=totalPage%>', null, "get", () => {
+                else submit('/submit/employee/page/<%=totalPage%>', null, "get", () => {
                     window.location.reload()
                 });
                 break;

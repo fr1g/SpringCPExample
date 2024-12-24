@@ -31,8 +31,8 @@ public class TraderRest {
         var maxPage = 0;
         try {
             maxPage = traderService.getPagination().getTableTotalPages();
-            if(maxPage < page) request.getSession().setAttribute("currentPage", Integer.valueOf(maxPage));
-            else request.getSession().setAttribute("currentPage", page);
+            if(maxPage < page) request.getSession().setAttribute("traders/currentPage", Integer.valueOf(maxPage));
+            else request.getSession().setAttribute("traders/currentPage", page);
         } catch (Exception ex){
             ex.printStackTrace();
         }
@@ -46,7 +46,7 @@ public class TraderRest {
             traderService.delete(new Trader(id));
             message = "Remove Successfully: " + id; // why da' fvck the java have no template string as c#?
         } catch (Exception ex){
-            ex.printStackTrace();
+            if(!ex.toString().contains("Cannot delete or update")) ex.printStackTrace();
             var isReallyExist = traderService.isExist(id);
             message = "Error occurred: " + (isReallyExist ? "@Unknown" : "@NotFound") + " @" + ex.getMessage();
             // idk
@@ -67,35 +67,39 @@ public class TraderRest {
                             body,
                             (new TypeToken<ResponseObject<Trader>>(){}).getType()
                     )
-            ).content; // #pragma
-
-            System.out.println((new Gson()).toJson(got));
-
-            // procedure:
-            /**
-             * 1. get unfiltered json
-             * 2. make the json parsed as unfiltered object
-             * 3. split the unfiltered name and give values to the positions
-             * 4. run check
-             * !! convention:
+            ).content; // # pragma
+            /* PROCEDURE:
+              1. get unfiltered json
+              2. make the json parsed as unfiltered object
+              3. split the unfiltered name and give values to the positions
+              4. run check
+              !! convention:
              */
             got = this.filtTrader(got);
+            System.out.println((new Gson()).toJson(got));
+
 
             exist = traderService.isExist(got.traderID);
             if (exist){
                 Trader before = traderService.get(got.traderID);
                 if(got.contact.equals("~")) got.contact = before.contact;
                 if(got.name.equals("~")) got.name = before.name;
+                if(got.registrar.empId == -1) got.registrar = before.registrar;
+                if(got.note.equals("~")) got.note = before.note;
+                if(got.type == null) got.type = before.type;
+
                 traderService.update(got);
             }
             else {
-                if(got.contact.equals("~") || got.name.equals("~")) return ResponseHelper.Return(405, "E@Ilegal-Data");
-                traderService.insert(got);
+                if(got.contact.equals("~") || got.name.equals("~") || got.registrar.empId == -1 || got.type == null)
+                    return ResponseHelper.Return(405, "E@Illegal-Data");
+                else
+                    traderService.insert(got);
             }
 
             System.out.println(got.name);
         }catch (Exception ex){
-            ex.printStackTrace();
+            if(!ex.toString().contains("such")) ex.printStackTrace();
             return ResponseHelper.Return(502, ex.getMessage());
         }
         return ResponseHelper.Return(200, "X@Trader " + (exist ? "updated" : "inserted") + " successfully");
@@ -103,8 +107,9 @@ public class TraderRest {
 
     protected Trader filtTrader(Trader trader) {
         var prepare = trader.name.split("@");
-        trader.registrar = (prepare[1].equals("-1")) ? employeeService.get(Integer.parseInt(prepare[1])) : new Employee(-1);
+        trader.registrar = (!prepare[1].equals("-1")) ? employeeService.get(Integer.parseInt(prepare[1])) : new Employee(-1);
         trader.name = prepare[0];
+        if(trader.note.equals("unfiltered")) trader.note = null; // todo maybe causes problem
         return trader;
     }
 }

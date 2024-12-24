@@ -8,21 +8,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import su.kami.demo.DataAccess.Interfaces.DAO;
+import su.kami.demo.Models.Employee;
 import su.kami.demo.Models.enums.ETraderType;
 import su.kami.demo.Models.Trader;
 import su.kami.demo.utils.*;
 
 public class RelatedTrader implements DAO<Trader> {
     private Connection connection;
+    private EmployeeManage relatedRegistrar;
 
     public RelatedTrader(Connection connection){
         this.connection = connection;
     }
 
-    public RelatedTrader(MyConn connection) {
+    public RelatedTrader(MyConn connection, EmployeeManage relatedRegistrar) {
         this.connection = connection.create();
+        this.relatedRegistrar = relatedRegistrar;
     }
-
 
     @Override
     public Trader get(int id) {
@@ -30,7 +32,16 @@ public class RelatedTrader implements DAO<Trader> {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM traders WHERE trader_id = ?");
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()) return resultSet.getObject(1, Trader.class);
+            if(resultSet.next())
+                return new Trader(
+                        id,
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        ETraderType.enumerize(resultSet.getInt(4)),
+                        this.relatedRegistrar.get(resultSet.getInt(5)),
+                        resultSet.getString(6)
+                );
+//            if(resultSet.next()) return resultSet.getObject(1, Trader.class);
             //?
         }catch (Exception ex){
             ex.printStackTrace();
@@ -51,7 +62,14 @@ public class RelatedTrader implements DAO<Trader> {
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Trader> traders = new ArrayList<>();
             while(resultSet.next()){
-                traders.add(resultSet.getObject(1, Trader.class));
+                traders.add(new Trader(
+                        resultSet.getInt(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        ETraderType.enumerize(resultSet.getInt(4)),
+                        this.relatedRegistrar.get(resultSet.getInt(5)),
+                        resultSet.getString(6)
+                ));
             }
             return traders;
         }catch (Exception ex){

@@ -12,22 +12,35 @@ public class MyTableHelper<T> {
 
     public List<String[]> toMappedStrings(List<?> from){
         List<String[]> toReturn = new ArrayList<>();
-        for(Object o : from)
-            toReturn.add(this.toStrings(o));
+        for(Object o : from) {
+            if (o == null)
+                toReturn.add(new String[]{"_null_"});
+            else
+                toReturn.add(this.toStrings(o));
+        }
         return toReturn;
     }
 
-    public String giveHtmlTableRow(String[] items, String cellClassName, String cellPresetStyle, boolean requiringTableHead){
-        int now = 0;
+    public String giveHtmlTableRow(String[] items, String cellClassName, String cellPresetStyle, boolean requiringTableHead, HtmlTableCellWrapper wrapper){
+        int now = 0,  wrappingOn = 0;
         if(cellPresetStyle == null) cellPresetStyle = " ";
         if(cellClassName == null) cellClassName = " ";
 
         StringBuilder result = new StringBuilder("\n<tr>\n");
+
+
+        if(wrapper != null){
+            wrappingOn = wrapper.CellPosition;
+        }
         for(String x : items){
             result.append(NL).append(requiringTableHead ? "<th " : "<td ").append(cellPresetStyle).append(" class=\"").append(cellClassName).append("\" >\n");
+            var passer = x;
+            if(wrapper != null && wrapper.IsAbleToWrap(now))
+                passer = wrapper.Wrap(x);// todo wrapper
+
             result.append((x == null) ?
                             this.combine(now, "no_content", true) :
-                            this.combine(now, x, true));
+                            this.combine(now, passer, true));
             result.append(NL);
             result.append(requiringTableHead ? "</th>" : "</td>");
 
@@ -38,15 +51,15 @@ public class MyTableHelper<T> {
     }
 
     public String giveHtmlTable(String[] head, List<T[]> body){
-        return this.giveHtmlTable(head, null, null, body, null, null, null, false);
+        return this.giveHtmlTable(head, null, null, body, null, null, null, false, null);
     }
 
     public String giveHtmlTable(String[] head, List<T[]> body, Map<String, String> tablePresetAttributes, boolean separate){
-        return this.giveHtmlTable(head, null, null, body, null, null, tablePresetAttributes, separate);
+        return this.giveHtmlTable(head, null, null, body, null, null, tablePresetAttributes, separate, null);
     }
 
     public String giveHtmlTable(String[] head, String headClass, List<T[]> body, String bodyCellClass, Map<String, String> tablePresetAttributes){
-        return this.giveHtmlTable(head, headClass, null, body, bodyCellClass, null, tablePresetAttributes, false);
+        return this.giveHtmlTable(head, headClass, null, body, bodyCellClass, null, tablePresetAttributes, false, null);
     }
 
     public String giveHtmlTable(
@@ -57,7 +70,8 @@ public class MyTableHelper<T> {
             String bodyCellClassName,
             String bodyCellPresetStyle,
             Map<String, String> tablePresetAttributes,
-            boolean usingSeparatedTableForm
+            boolean usingSeparatedTableForm,
+            HtmlTableCellWrapper wrapper
     ){
         if(headClassName == null) headClassName = "";
         if(headPresetStyle == null) headPresetStyle = "";
@@ -66,13 +80,14 @@ public class MyTableHelper<T> {
         if(tablePresetAttributes == null) tablePresetAttributes = Map.of("", "");
 
         String tableHead = usingSeparatedTableForm ?
-                giveHtmlTableRow(head, headClassName, headPresetStyle, true) :
-                giveHtmlTableRow(head, ("table_head@MyTableHelper " + headClassName), headPresetStyle, false)
+                giveHtmlTableRow(head, headClassName, headPresetStyle, true, ((wrapper != null && wrapper.forHeaderAlso) ? wrapper : null)) :
+                giveHtmlTableRow(head, ("table_head@MyTableHelper " + headClassName), headPresetStyle, false, ((wrapper != null && wrapper.forHeaderAlso) ? wrapper : null))
                 ;
+
         StringBuilder tableBody = new StringBuilder();
         StringBuilder table = new StringBuilder();
         for(T[] rows : body)
-            tableBody.append(giveHtmlTableRow((String[]) rows, bodyCellClassName, bodyCellPresetStyle, false));
+            tableBody.append( giveHtmlTableRow( (String[]) rows, bodyCellClassName, bodyCellPresetStyle, false, wrapper) );
 
         table.append("<table ");
         for(Map.Entry<String, String> x: tablePresetAttributes.entrySet())
@@ -108,12 +123,21 @@ public class MyTableHelper<T> {
         for(Field f : fields){
             f.setAccessible(true);
             try {
-                result[it] = f.get(obj).toString();
-            }catch (IllegalAccessException e) {
+                result[it] = f.get(obj) == null ? "_null_" : (String) f.getType().getMethod("toString").invoke(f.get(obj));
+            } catch (IllegalAccessException | InvocationTargetException e) {
                 System.err.println("IllegalAccessException, but can continue trying.");
                 e.printStackTrace();
                 System.err.println("In this case, inserted [eacc] instead.");
                 result[it] = "[eacc]";
+            } catch(NoSuchMethodException e) {
+                try{
+                    result[it] = f.get(obj).toString();
+                }catch (IllegalAccessException e1){
+                    System.err.println("IllegalAccessException, but can continue trying. Nested: NoSuchMethodException");
+                    e.printStackTrace();
+                    System.err.println("In this case, inserted [eacc] instead.");
+                    result[it] = "[eacc]";
+                }
             }
             it++;
         }
