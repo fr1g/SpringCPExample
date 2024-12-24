@@ -48,7 +48,10 @@ public class BaseService implements Service<Trader> {
         List<String[]> content = new ArrayList<>();
 
         try {
+            pagination.stateHasChanged();
+            pagination.setPageSize(pageSize);
             pagination.gotoPage(page);
+            pagination.stateHasChanged();
             for(Trader x : pagination.pageContent){
                 var res1 = SharedStatics.publicTableHelper.toStrings(x);
                 var res2 = SharedStatics.publicTableHelper.toStrings(x.registrar);

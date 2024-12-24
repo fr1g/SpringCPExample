@@ -5,11 +5,13 @@
 <%@ page import="su.kami.demo.utils.QueriedPageTools.PaginationException" %>
 <%--In Session Storage The Requiring Page Number?--%>
 <%
-  int pageNumber, totalPage;
+  int pageNumber, totalPage, pageSize = 12;
   BaseService service = (BaseService) SharedStatics.dynamicShared.services.get("BaseService");
   Page<Trader> pagination = service.getPagination();
   String forPrev = "", forNext = "";
   try {
+
+    pagination.setPageSize(pageSize);
 
     if(session.getAttribute("combined/currentPage") == null){
       pageNumber = 1;
@@ -32,10 +34,10 @@
     out.print("CurrPage: " + session.getAttribute("combined/currentPage"));
   }
 
-  String result = service.getCombinedTableHtml(pageNumber, 0, "w-full bg-slate-200 rounded-lg p-3", "p-1");
+  String result = service.getCombinedTableHtml(pageNumber, pageSize, "w-full bg-slate-200 rounded-lg p-3", "p-1");
 %>
 <div id="rely" class="p-3 bg-slate-200 rounded-lg overflow-y-hidden overflow-x-auto pb-[83px]" >
-  <div class="w-full min-w-[50vw] max-w-[100vw]">
+  <div class="w-screen">
     <%=result%>
   </div>
 </div>
