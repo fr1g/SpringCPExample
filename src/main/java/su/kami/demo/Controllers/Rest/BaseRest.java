@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 public class BaseRest {
     @GetMapping("/clearMsg")
     public void clearMsg(HttpServletRequest request ) {
+//        System.out.println("Requested to clear msg");
         request.getSession().setAttribute("_msg", null);
     }
 }

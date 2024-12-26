@@ -36,7 +36,7 @@
             alert("Wrong Input");
             return;
         }
-        submit(('submit/trader/remove/' + targetOfRemove), null, 'get', () => {
+        submit(('/submit/trader/remove/' + targetOfRemove), null, 'get', () => {
             alert("Sent Message to the Server.");
             window.location.replace(window.location.href.replace("#remove", ""));
         });
@@ -53,8 +53,8 @@
 
     const message = '<%=session.getAttribute("_msg")%>';
     if(message.includes("REMOVE") && message.includes("Error occurred")) {
-        submit('/submit/base/clearMsg', null);
         alert('One pending operation failed:\n' + message);
+        submit('/submit/base/clearMsg', null);
     }
 </script>
 <div class="w-full min-h-screen bg-slate-300 py-12">
