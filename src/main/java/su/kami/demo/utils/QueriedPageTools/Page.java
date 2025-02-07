@@ -6,7 +6,6 @@ import su.kami.demo.DataAccess.Interfaces.DAO;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Page<T> {
     protected DAO<T> accessAgent;
 
