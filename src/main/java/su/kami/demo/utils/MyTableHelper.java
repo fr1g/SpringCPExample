@@ -72,6 +72,7 @@ public class MyTableHelper<T> {
             Map<String, String> tablePresetAttributes,
             boolean usingSeparatedTableForm,
             HtmlTableCellWrapper wrapper
+            // todo: this place can make the wrapper as an array with size of cells in a row. in which position, which cell got an un-null wrapper, gotta apply it.
     ){
         if(headClassName == null) headClassName = "";
         if(headPresetStyle == null) headPresetStyle = "";

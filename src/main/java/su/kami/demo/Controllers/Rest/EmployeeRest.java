@@ -70,7 +70,6 @@ public class EmployeeRest {
 
             System.out.println((new Gson()).toJson(got));
 
-
             exist = employeeService.isExist(got.empId);
             if (exist){
                 Employee before = employeeService.get(got.empId);

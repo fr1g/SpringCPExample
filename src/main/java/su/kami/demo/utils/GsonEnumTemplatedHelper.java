@@ -16,7 +16,6 @@ public class GsonEnumTemplatedHelper<T extends EnumTemplate> implements JsonDese
         Class<?> clazz = (Class<?>) type;
         T result = null;
         try{
-
             result = (T) clazz.getMethod("enumerize", Integer.TYPE).invoke(null, jsonElement.getAsInt());
             // # pragma disable typeMatchCheck -fvck
         }catch (Exception ex){
